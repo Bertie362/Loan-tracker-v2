@@ -77,14 +77,22 @@
     </section>
 
     <section class="card backup-card">
-      <button id="exportBtn">Export Backup</button>
+  <button id="exportBtn">Export Backup</button>
 
-      <p id="lastBackup" class="backup-text">
-        ⚪ Never backed up
-      </p>
+  <p id="lastBackup" class="backup-text">
+    ⚪ Never backed up
+  </p>
 
-      <input id="importInput" type="file" accept=".json,application/json" />
-    </section>
+  <label for="importInput" class="import-label">
+    Restore Backup
+  </label>
+
+  <input
+    id="importInput"
+    type="file"
+    accept=".json,application/json"
+  />
+</section>
 
   </div>
 
