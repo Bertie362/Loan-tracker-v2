@@ -557,8 +557,16 @@ function saveEditedEntry() {
 ======================== */
 
 function exportBackup() {
-  const data = JSON.stringify(getData(), null, 2);
-  const blob = new Blob([data], { type: "application/json" });
+  const data = getData();
+
+  if (!data.length) {
+    alert("No entries to back up yet.");
+    return;
+  }
+
+  const backup = JSON.stringify(data, null, 2);
+
+  const blob = new Blob([backup], { type: "application/json" });
   const url = URL.createObjectURL(blob);
 
   const today = new Date().toISOString().slice(0, 10);
@@ -566,12 +574,17 @@ function exportBackup() {
   const a = document.createElement("a");
   a.href = url;
   a.download = `loan-tracker-backup-${today}.json`;
+
+  document.body.appendChild(a);
   a.click();
+  a.remove();
 
   localStorage.setItem(BACKUP_KEY, new Date().toISOString());
   renderLastBackup();
 
   URL.revokeObjectURL(url);
+
+  alert(`Backup exported: ${data.length} entries saved.`);
 }
 
 function importBackup(event) {
