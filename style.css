@@ -350,3 +350,17 @@ button:active {
     transform: scale(1);
   }
 }
+.import-label {
+  display: block;
+  text-align: center;
+  background: #4da3ff;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+#importInput {
+  margin-top: 10px;
+}
