@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full Log</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+
+    <header class="header">
+      <div>
+        <h1>Full Log</h1>
+        <p>All money activity</p>
+      </div>
+      <a href="index.html" class="link-btn">Back</a>
+    </header>
+
+    <section class="card">
+      <input id="search" type="text" placeholder="Search reason..." />
+
+      <select id="sort">
+        <option value="date-desc">Newest First</option>
+        <option value="date-asc">Oldest First</option>
+        <option value="amount-desc">Amount ↓</option>
+        <option value="amount-asc">Amount ↑</option>
+      </select>
+    </section>
+
+    <section class="card">
+      <h2>All Entries</h2>
+      <div id="logContainer"></div>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loan Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+
+    <header class="header">
+      <div>
+        <h1>Loan Tracker</h1>
+        <p>Track money lent and paid back</p>
+      </div>
+      <a href="log.html" class="link-btn">View Log</a>
+    </header>
+
+    <section class="card balance-card">
+      <p>Current Balance</p>
+      <div id="balance">£0.00</div>
+
+      <div class="stats">
+        <div>
+          <span>Total Lent</span>
+          <strong id="totalLent">£0.00</strong>
+        </div>
+
+        <div>
+          <span>Total Paid</span>
+          <strong id="totalPaid">£0.00</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="card monthly-card">
+      <h2 id="monthTitle">This Month</h2>
+
+      <div class="monthly-grid">
+        <div>
+          <span>Lent</span>
+          <strong id="monthLent">£0.00</strong>
+        </div>
+
+        <div>
+          <span>Paid</span>
+          <strong id="monthPaid">£0.00</strong>
+        </div>
+
+        <div>
+          <span>Balance</span>
+          <strong id="monthBalance">£0.00</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <label>Amount (£)</label>
+      <input id="amount" type="number" placeholder="e.g. 20" />
+
+      <label>Reason</label>
+      <input id="reason" type="text" placeholder="Only needed when lending money" />
+
+      <div class="buttons">
+        <button id="lendBtn" class="btn-lent">Money Lent</button>
+        <button id="paidBtn" class="btn-paid">Money Paid Back</button>
+      </div>
+
+      <button id="settleBtn" class="settle-btn">Settle Balance</button>
+    </section>
+
+    <section class="card">
+      <h2>Recent Activity</h2>
+      <div id="recentList"></div>
+    </section>
+
+    <section class="card backup-card">
+      <button id="exportBtn">Export Backup</button>
+
+      <p id="lastBackup" class="backup-text">
+        ⚪ Never backed up
+      </p>
+
+      <input id="importInput" type="file" accept=".json,application/json" />
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
