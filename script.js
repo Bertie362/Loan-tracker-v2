@@ -559,9 +559,8 @@ function saveEditedEntry() {
 function exportBackup() {
   const data = getData();
 
-  if (!data.length) {
-    alert("No entries to back up yet.");
-    return;
+  console.log("Export data:", data);
+  alert("Entries found: " + data.length);
   }
 
   const backup = JSON.stringify(data, null, 2);
