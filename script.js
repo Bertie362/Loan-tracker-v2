@@ -561,10 +561,13 @@ function exportBackup() {
 
   console.log("Export data:", data);
   alert("Entries found: " + data.length);
+
+  if (!data.length) {
+    alert("No entries to back up yet.");
+    return;
   }
 
   const backup = JSON.stringify(data, null, 2);
-
   const blob = new Blob([backup], { type: "application/json" });
   const url = URL.createObjectURL(blob);
 
