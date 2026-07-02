@@ -53,7 +53,6 @@ function setText(id, text) {
 /* ========================
    BACKUP STATUS
 ======================== */
-
 function renderLastBackup() {
   const label = document.getElementById("lastBackup");
   if (!label) return;
@@ -70,19 +69,42 @@ function renderLastBackup() {
 
   const backupDate = new Date(saved);
   const now = new Date();
-  const diffDays = Math.floor((now - backupDate) / 86400000);
+  const diffMs = now - backupDate;
+
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  const time = backupDate.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+
+  let text = "";
+
+  if (diffMins < 1) {
+    text = `Just now at ${time}`;
+  } else if (diffMins < 60) {
+    text = `${diffMins} minute${diffMins === 1 ? "" : "s"} ago`;
+  } else if (diffHours < 24) {
+    text = `${diffHours} hour${diffHours === 1 ? "" : "s"} ago at ${time}`;
+  } else {
+    text = `${diffDays} day${diffDays === 1 ? "" : "s"} ago at ${time}`;
+  }
 
   if (diffDays < 7) {
-    label.textContent = `🟢 Last Backup: ${diffDays === 0 ? "Today" : `${diffDays} day${diffDays === 1 ? "" : "s"} ago`}`;
+    label.textContent = `🟢 Last Backup: ${text}`;
     label.classList.add("backup-good");
   } else if (diffDays < 30) {
-    label.textContent = `🟡 Backup Recommended (${diffDays} days ago)`;
+    label.textContent = `🟡 Backup Recommended: ${text}`;
     label.classList.add("backup-warning");
   } else {
-    label.textContent = `🔴 Backup Overdue (${diffDays} days ago)`;
+    label.textContent = `🔴 Backup Overdue: ${text}`;
     label.classList.add("backup-danger");
   }
 }
+
+
 
 /* ========================
    BALANCE + MONTH
