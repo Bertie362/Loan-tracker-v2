@@ -506,3 +506,17 @@ label,
 #importInput {
   display: none;
 }
+.hidden{
+    display:none;
+}
+
+.developer-menu{
+    margin-top:25px;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.1);
+}
+
+.developer-menu button{
+    width:100%;
+    margin-top:10px;
+}
