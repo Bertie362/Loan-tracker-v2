@@ -852,8 +852,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
-  // ...everything else stays exactly where it is...
-});
   document.getElementById("settleBtn")?.addEventListener("click", settleBalance);
 
   document.getElementById("search")?.addEventListener("input", renderLog);
