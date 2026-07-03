@@ -1,6 +1,9 @@
 const STORAGE_KEY = "loans";
 const BACKUP_KEY = "lastBackup";
 
+const THEME_KEY = "loanTheme";
+const ACCENT_KEY = "loanAccent";
+
 let lastDeleted = null;
 let undoTimer = null;
 let editingId = null;
@@ -648,10 +651,87 @@ function importBackup(event) {
 }
 
 /* ========================
+   APPEARANCE SETTINGS
+======================== */
+
+function getThemeSetting() {
+  return localStorage.getItem(THEME_KEY) || "system";
+}
+
+function getAccentSetting() {
+  return localStorage.getItem(ACCENT_KEY) || "blue";
+}
+
+function applyAppearanceSettings() {
+  const theme = getThemeSetting();
+  const accent = getAccentSetting();
+
+  document.body.classList.remove("theme-light", "theme-dark");
+
+  document.body.classList.remove(
+    "accent-blue",
+    "accent-green",
+    "accent-purple",
+    "accent-orange",
+    "accent-slate"
+  );
+
+  if (theme === "light") {
+    document.body.classList.add("theme-light");
+  }
+
+  if (theme === "dark") {
+    document.body.classList.add("theme-dark");
+  }
+
+  if (theme === "system") {
+    const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+    if (prefersLight) {
+      document.body.classList.add("theme-light");
+    }
+  }
+
+  document.body.classList.add(`accent-${accent}`);
+}
+
+function setupSettingsPage() {
+  const themeButtons = document.querySelectorAll("[data-theme]");
+  const accentButtons = document.querySelectorAll("[data-accent]");
+
+  themeButtons.forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.theme === getThemeSetting()
+    );
+
+    button.addEventListener("click", () => {
+      localStorage.setItem(THEME_KEY, button.dataset.theme);
+      applyAppearanceSettings();
+      setupSettingsPage();
+    });
+  });
+
+  accentButtons.forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.accent === getAccentSetting()
+    );
+
+    button.addEventListener("click", () => {
+      localStorage.setItem(ACCENT_KEY, button.dataset.accent);
+      applyAppearanceSettings();
+      setupSettingsPage();
+    });
+  });
+}
+
+/* ========================
    INIT
 ======================== */
 
 document.addEventListener("DOMContentLoaded", () => {
+  applyAppearanceSettings();
+  setupSettingsPage();
   refreshUI();
 
   document.getElementById("lendBtn")?.addEventListener("click", () => {
