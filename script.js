@@ -814,6 +814,75 @@ async function reloadPWA(){
 }
 
 /* ========================
+   PWA UPDATE BANNER
+======================== */
+
+let waitingServiceWorker = null;
+
+function createUpdateBanner() {
+  if (document.getElementById("updateBanner")) return;
+
+  const banner = document.createElement("div");
+  banner.id = "updateBanner";
+  banner.className = "update-banner";
+
+  banner.innerHTML = `
+    <strong>🚀 Update available</strong>
+    <p>A new version of Loan Tracker is ready.</p>
+    <button id="updateNowBtn">Update Now</button>
+  `;
+
+  document.body.appendChild(banner);
+
+  document.getElementById("updateNowBtn").addEventListener("click", () => {
+    if (!waitingServiceWorker) return;
+
+    waitingServiceWorker.postMessage({
+      type: "SKIP_WAITING"
+    });
+  });
+}
+
+function showUpdateBanner(worker) {
+  waitingServiceWorker = worker;
+  createUpdateBanner();
+
+  document.getElementById("updateBanner")?.classList.add("show");
+}
+
+function setupPWAUpdateBanner() {
+  if (!("serviceWorker" in navigator)) return;
+
+  navigator.serviceWorker.getRegistration().then(registration => {
+    if (!registration) return;
+
+    registration.addEventListener("updatefound", () => {
+      const newWorker = registration.installing;
+
+      if (!newWorker) return;
+
+      newWorker.addEventListener("statechange", () => {
+        if (
+          newWorker.state === "installed" &&
+          navigator.serviceWorker.controller
+        ) {
+          showUpdateBanner(newWorker);
+        }
+      });
+    });
+  });
+
+  let refreshing = false;
+
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (refreshing) return;
+
+    refreshing = true;
+    window.location.reload();
+  });
+}
+
+/* ========================
    INIT
 ======================== */
 
@@ -821,8 +890,10 @@ document.addEventListener("DOMContentLoaded", () => {
   applyAppearanceSettings();
   setupSettingsPage();
   refreshUI();
+   setupPWAUpdateBanner();
 
   setupDeveloperMenu();
+   
 
   document
     .getElementById("refreshAppBtn")
