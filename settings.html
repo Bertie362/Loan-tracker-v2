@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <div class="header">
+      <div>
+        <h1>Settings</h1>
+        <p>Personalise Loan Tracker</p>
+      </div>
+      <a class="link-btn" href="index.html">Back</a>
+    </div>
+
+    <section class="card settings-card">
+      <h2>Appearance</h2>
+
+      <label>Theme</label>
+      <div class="settings-options">
+        <button class="setting-choice" data-theme="system">System</button>
+        <button class="setting-choice" data-theme="dark">Dark</button>
+        <button class="setting-choice" data-theme="light">Light</button>
+      </div>
+
+      <label>Accent Colour</label>
+      <div class="accent-grid">
+        <button class="accent-dot blue" data-accent="blue"></button>
+        <button class="accent-dot green" data-accent="green"></button>
+        <button class="accent-dot purple" data-accent="purple"></button>
+        <button class="accent-dot orange" data-accent="orange"></button>
+        <button class="accent-dot slate" data-accent="slate"></button>
+      </div>
+    </section>
+
+    <section class="card settings-card">
+      <h2>Data</h2>
+
+      <div class="backup-text" id="lastBackup">⚪ Never backed up</div>
+
+      <button id="exportBtn" class="settings-main-btn">Export Backup</button>
+
+      <label for="importInput" class="import-label">Restore Backup</label>
+      <input id="importInput" type="file" accept="application/json">
+    </section>
+
+    <section class="card settings-card">
+      <h2>About</h2>
+      <p class="muted">Loan Tracker v1.0 BETA</p>
+      <p class="muted">Local money tracker.</p>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
