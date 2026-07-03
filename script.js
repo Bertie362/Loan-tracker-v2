@@ -853,7 +853,11 @@ function showUpdateBanner(worker) {
 function setupPWAUpdateBanner() {
   if (!("serviceWorker" in navigator)) return;
 
-  navigator.serviceWorker.ready.then(registration => {
+  navigator.serviceWorker.register("./service-worker.js").then(registration => {
+    if (registration.waiting) {
+      showUpdateBanner(registration.waiting);
+    }
+
     registration.addEventListener("updatefound", () => {
       const newWorker = registration.installing;
       if (!newWorker) return;
