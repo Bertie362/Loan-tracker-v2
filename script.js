@@ -853,12 +853,9 @@ function showUpdateBanner(worker) {
 function setupPWAUpdateBanner() {
   if (!("serviceWorker" in navigator)) return;
 
-  navigator.serviceWorker.getRegistration().then(registration => {
-    if (!registration) return;
-
+  navigator.serviceWorker.ready.then(registration => {
     registration.addEventListener("updatefound", () => {
       const newWorker = registration.installing;
-
       if (!newWorker) return;
 
       newWorker.addEventListener("statechange", () => {
@@ -870,13 +867,14 @@ function setupPWAUpdateBanner() {
         }
       });
     });
+
+    registration.update();
   });
 
   let refreshing = false;
 
   navigator.serviceWorker.addEventListener("controllerchange", () => {
     if (refreshing) return;
-
     refreshing = true;
     window.location.reload();
   });
