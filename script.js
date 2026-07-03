@@ -726,6 +726,94 @@ function setupSettingsPage() {
 }
 
 /* ========================
+   DEVELOPER MENU
+======================== */
+
+let versionTapCount = 0;
+
+function setupDeveloperMenu(){
+
+    const version=document.getElementById("appVersion");
+
+    if(!version) return;
+
+    version.addEventListener("click",()=>{
+
+        versionTapCount++;
+
+        if(versionTapCount<7){
+
+            const remaining=7-versionTapCount;
+
+            if(remaining<=3){
+                alert(`${remaining} more taps to unlock Developer Mode`);
+            }
+
+            return;
+        }
+
+        localStorage.setItem("developerMode","true");
+
+        showDeveloperMenu();
+
+    });
+
+    showDeveloperMenu();
+
+}
+
+function showDeveloperMenu(){
+
+    if(localStorage.getItem("developerMode")!=="true")
+        return;
+
+    document
+        .getElementById("developerMenu")
+        ?.classList.remove("hidden");
+
+}
+
+async function clearPWACache(){
+
+    if("caches" in window){
+
+        const keys=await caches.keys();
+
+        for(const key of keys){
+            await caches.delete(key);
+        }
+
+    }
+
+    alert("Cache cleared.");
+
+}
+
+function refreshApp(){
+
+    location.reload();
+
+}
+
+async function reloadPWA(){
+
+    if(navigator.serviceWorker){
+
+        const regs=await navigator.serviceWorker.getRegistrations();
+
+        for(const reg of regs){
+
+            reg.update();
+
+        }
+
+    }
+
+    location.reload();
+
+}
+
+/* ========================
    INIT
 ======================== */
 
@@ -733,6 +821,20 @@ document.addEventListener("DOMContentLoaded", () => {
   applyAppearanceSettings();
   setupSettingsPage();
   refreshUI();
+
+  setupDeveloperMenu();
+
+  document
+    .getElementById("refreshAppBtn")
+    ?.addEventListener("click", refreshApp);
+
+  document
+    .getElementById("clearCacheBtn")
+    ?.addEventListener("click", clearPWACache);
+
+  document
+    .getElementById("reloadPWABtn")
+    ?.addEventListener("click", reloadPWA);
 
   document.getElementById("lendBtn")?.addEventListener("click", () => {
     addEntry(
@@ -750,6 +852,8 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
+  // ...everything else stays exactly where it is...
+});
   document.getElementById("settleBtn")?.addEventListener("click", settleBalance);
 
   document.getElementById("search")?.addEventListener("input", renderLog);
