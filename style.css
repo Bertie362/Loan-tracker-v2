@@ -364,3 +364,134 @@ button:active {
 #importInput {
   margin-top: 10px;
 }
+:root {
+  --bg: #0d0f12;
+  --card: #181b20;
+  --card-soft: #101318;
+  --text: #ffffff;
+  --muted: #aaa;
+  --border: #262b33;
+  --accent: #4da3ff;
+}
+
+body.theme-light {
+  --bg: #f4f6f8;
+  --card: #ffffff;
+  --card-soft: #eef1f5;
+  --text: #101318;
+  --muted: #667085;
+  --border: #d9dee7;
+}
+
+body.accent-blue { --accent: #4da3ff; }
+body.accent-green { --accent: #3ddc84; }
+body.accent-purple { --accent: #a855f7; }
+body.accent-orange { --accent: #f97316; }
+body.accent-slate { --accent: #64748b; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.card,
+.modal {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+.stats div,
+.monthly-grid div,
+input,
+select,
+.log-item,
+.recent-item {
+  background: var(--card-soft);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.header p,
+label,
+.entry-info small,
+.empty,
+.muted {
+  color: var(--muted);
+}
+
+.link-btn,
+.edit-btn,
+.settle-btn,
+.import-label,
+.settings-main-btn {
+  background: var(--accent);
+  color: white;
+}
+
+.backup-status-card {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.backup-status-card span {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.backup-status-card strong {
+  display: block;
+  font-size: 15px;
+}
+
+.settings-card h2 {
+  margin-top: 0;
+}
+
+.settings-options {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 18px;
+}
+
+.setting-choice {
+  flex: 1;
+  background: var(--card-soft);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.setting-choice.active {
+  background: var(--accent);
+  color: white;
+}
+
+.accent-grid {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.accent-dot {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 3px solid transparent;
+}
+
+.accent-dot.active {
+  border-color: var(--text);
+}
+
+.accent-dot.blue { background: #4da3ff; }
+.accent-dot.green { background: #3ddc84; }
+.accent-dot.purple { background: #a855f7; }
+.accent-dot.orange { background: #f97316; }
+.accent-dot.slate { background: #64748b; }
+
+.settings-main-btn {
+  width: 100%;
+  margin-top: 12px;
+}
