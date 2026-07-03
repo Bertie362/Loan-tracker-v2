@@ -1,9 +1,10 @@
-const CACHE_NAME = "loan-tracker-v1";
+const CACHE_NAME = "loan-tracker-v2";
 
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./log.html",
+  "./settings.html",
   "./style.css",
   "./script.js",
   "./manifest.json",
