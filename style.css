@@ -419,7 +419,6 @@ label,
   color: var(--muted);
 }
 
-.link-btn,
 .edit-btn,
 .settle-btn,
 .import-label,
@@ -427,6 +426,14 @@ label,
   background: var(--accent);
   color: white;
 }
+
+.link-btn {
+  background: transparent;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+}
+
 
 .backup-status-card {
   display: block;
@@ -494,4 +501,8 @@ label,
 .settings-main-btn {
   width: 100%;
   margin-top: 12px;
+
+}
+#importInput {
+  display: none;
 }
