@@ -576,3 +576,8 @@ label,
     opacity: 1;
   }
 }
+.edit-date-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
