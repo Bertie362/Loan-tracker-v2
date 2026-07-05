@@ -481,6 +481,9 @@ function createEditModal() {
       <label>Amount (£)</label>
       <input id="editAmount" type="number" />
 
+      <label>Date</label>
+      <input id="editDate" type="datetime-local" />
+
       <label>Type</label>
       <select id="editType">
         <option value="lent">Money Lent</option>
@@ -526,6 +529,10 @@ function openEditModal(id) {
   editingId = id;
 
   document.getElementById("editAmount").value = item.amount;
+
+  const date = new Date(item.date);
+  document.getElementById("editDate").value = date.toISOString().slice(0, 16);
+
   document.getElementById("editType").value = item.type;
   document.getElementById("editReason").value =
     item.type === "paid" ? "" : item.reason;
@@ -544,11 +551,17 @@ function saveEditedEntry() {
   if (!editingId) return;
 
   const amount = Number(document.getElementById("editAmount").value);
+  const dateValue = document.getElementById("editDate").value;
   const type = document.getElementById("editType").value;
   let reason = document.getElementById("editReason").value.trim();
 
   if (!amount || amount <= 0) {
     alert("Enter a valid amount.");
+    return;
+  }
+
+  if (!dateValue) {
+    alert("Choose a valid date.");
     return;
   }
 
@@ -568,7 +581,8 @@ function saveEditedEntry() {
       ...entry,
       amount,
       type,
-      reason
+      reason,
+      date: new Date(dateValue).toISOString()
     };
   });
 
