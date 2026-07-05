@@ -586,3 +586,22 @@ label,
   grid-template-columns: 1fr;
   gap: 10px;
 }
+.modal {
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.modal input,
+.modal select {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.edit-date-row {
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
