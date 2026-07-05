@@ -481,8 +481,11 @@ function createEditModal() {
       <label>Amount (£)</label>
       <input id="editAmount" type="number" />
 
-      <label>Date</label>
-      <input id="editDate" type="datetime-local" />
+      <label>Date & Time</label>
+      <div class="edit-date-row">
+        <input id="editDate" type="date" />
+        <input id="editTime" type="time" />
+      </div>
 
       <label>Type</label>
       <select id="editType">
@@ -528,10 +531,11 @@ function openEditModal(id) {
 
   editingId = id;
 
-  document.getElementById("editAmount").value = item.amount;
-
   const date = new Date(item.date);
-  document.getElementById("editDate").value = date.toISOString().slice(0, 16);
+
+  document.getElementById("editAmount").value = item.amount;
+  document.getElementById("editDate").value = date.toLocaleDateString("en-CA");
+  document.getElementById("editTime").value = date.toTimeString().slice(0, 5);
 
   document.getElementById("editType").value = item.type;
   document.getElementById("editReason").value =
@@ -552,6 +556,7 @@ function saveEditedEntry() {
 
   const amount = Number(document.getElementById("editAmount").value);
   const dateValue = document.getElementById("editDate").value;
+  const timeValue = document.getElementById("editTime").value || "00:00";
   const type = document.getElementById("editType").value;
   let reason = document.getElementById("editReason").value.trim();
 
@@ -582,7 +587,7 @@ function saveEditedEntry() {
       amount,
       type,
       reason,
-      date: new Date(dateValue).toISOString()
+      date: new Date(`${dateValue}T${timeValue}`).toISOString()
     };
   });
 
