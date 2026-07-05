@@ -1,4 +1,4 @@
-const APP_VERSION = "1.1.4";
+const APP_VERSION = "1.1.5";
 const CACHE_NAME = `loan-tracker-${APP_VERSION}`;
 
 const FILES_TO_CACHE = [
