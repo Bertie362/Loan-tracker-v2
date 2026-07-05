@@ -1,4 +1,3 @@
-const STORAGE_KEY = "loans";
 const BACKUP_KEY = "lastBackup";
 
 const THEME_KEY = "loanTheme";
@@ -12,30 +11,6 @@ let pendingDeleteId = null;
 /* ========================
    DATA
 ======================== */
-
-function getData() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const data = raw ? JSON.parse(raw) : [];
-
-    if (!Array.isArray(data)) return [];
-
-    return data.map(item => ({
-      id: item.id || crypto.randomUUID(),
-      amount: Number(item.amount) || 0,
-      type: item.type === "paid" ? "paid" : "lent",
-      date: item.date || new Date().toISOString(),
-      reason: String(item.reason || "")
-    }));
-  } catch (e) {
-    console.error("Data corrupted", e);
-    return [];
-  }
-}
-
-function saveData(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
 
 function money(value) {
   return `£${Number(value).toFixed(2)}`;
