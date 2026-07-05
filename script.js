@@ -274,6 +274,7 @@ function addEntry(amount, reason, type) {
 
   data.push({
     id: crypto.randomUUID(),
+    borrowerId: DEFAULT_BORROWER_ID,
     amount: cleanAmount,
     reason: cleanReason,
     type,
@@ -315,6 +316,7 @@ function settleBalance() {
 
   data.push({
     id: crypto.randomUUID(),
+    borrowerId: DEFAULT_BORROWER_ID,
     amount: balance,
     reason: "Balance settled",
     type: "paid",
@@ -885,6 +887,7 @@ function setupPWAUpdateBanner() {
 document.addEventListener("DOMContentLoaded", () => {
   applyAppearanceSettings();
   setupSettingsPage();
+  migrateDefaultBorrower();
   refreshUI();
    setupPWAUpdateBanner();
 

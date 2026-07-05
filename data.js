@@ -1,7 +1,12 @@
 const STORAGE_KEY = "loans";
+const BORROWERS_KEY = "borrowers";
 
 const DEFAULT_BORROWER_ID = "default";
 const DEFAULT_BORROWER_NAME = "Default";
+
+/* ========================
+   LOANS
+======================== */
 
 function getData() {
   try {
@@ -28,7 +33,67 @@ function saveData(data) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
+/* ========================
+   BORROWERS
+======================== */
+
+function getBorrowers() {
+  try {
+    const raw = localStorage.getItem(BORROWERS_KEY);
+    const borrowers = raw ? JSON.parse(raw) : [];
+
+    if (!Array.isArray(borrowers) || borrowers.length === 0) {
+      return [
+        {
+          id: DEFAULT_BORROWER_ID,
+          name: DEFAULT_BORROWER_NAME
+        }
+      ];
+    }
+
+    return borrowers.map(borrower => ({
+      id: borrower.id || crypto.randomUUID(),
+      name: String(borrower.name || DEFAULT_BORROWER_NAME)
+    }));
+  } catch (e) {
+    console.error("Borrower data corrupted", e);
+
+    return [
+      {
+        id: DEFAULT_BORROWER_ID,
+        name: DEFAULT_BORROWER_NAME
+      }
+    ];
+  }
+}
+
+function saveBorrowers(borrowers) {
+  localStorage.setItem(BORROWERS_KEY, JSON.stringify(borrowers));
+}
+
+function getBorrowerName(borrowerId) {
+  const borrower = getBorrowers().find(b => b.id === borrowerId);
+  return borrower ? borrower.name : DEFAULT_BORROWER_NAME;
+}
+
+/* ========================
+   MIGRATION
+======================== */
+
 function migrateDefaultBorrower() {
+  const borrowers = getBorrowers();
+
+  const hasDefault = borrowers.some(b => b.id === DEFAULT_BORROWER_ID);
+
+  if (!hasDefault) {
+    borrowers.unshift({
+      id: DEFAULT_BORROWER_ID,
+      name: DEFAULT_BORROWER_NAME
+    });
+  }
+
+  saveBorrowers(borrowers);
+
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) return;
 
@@ -41,6 +106,7 @@ function migrateDefaultBorrower() {
     const migrated = data.map(item => {
       if (!item.borrowerId) {
         changed = true;
+
         return {
           ...item,
           borrowerId: DEFAULT_BORROWER_ID
