@@ -576,32 +576,20 @@ label,
     opacity: 1;
   }
 }
-.edit-date-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-.edit-date-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
 .modal {
+  width: calc(100% - 32px);
+  max-width: 420px;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 .modal input,
 .modal select {
   width: 100%;
-  max-width: 100%;
   box-sizing: border-box;
 }
 
 .edit-date-row {
-  width: 100%;
-  max-width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
