@@ -123,3 +123,25 @@ function migrateDefaultBorrower() {
     console.error("Borrower migration failed", e);
   }
 }
+function addBorrower(name) {
+  const cleanName = String(name || "").trim();
+
+  if (!cleanName) return false;
+
+  const borrowers = getBorrowers();
+
+  const exists = borrowers.some(
+    b => b.name.toLowerCase() === cleanName.toLowerCase()
+  );
+
+  if (exists) return false;
+
+  borrowers.push({
+    id: crypto.randomUUID(),
+    name: cleanName
+  });
+
+  saveBorrowers(borrowers);
+
+  return true;
+}

@@ -180,6 +180,7 @@ function createEntryElement(item, showActions = false) {
     <div class="entry-info">
       <strong>${money(item.amount)}</strong>
       <p>${item.reason}</p>
+      <small>Borrower: ${getBorrowerName(item.borrowerId)}</small>
       <small>${new Date(item.date).toLocaleString()}</small>
     </div>
 
@@ -274,7 +275,7 @@ function addEntry(amount, reason, type) {
 
   data.push({
     id: crypto.randomUUID(),
-    borrowerId: DEFAULT_BORROWER_ID,
+    borrowerId: document.getElementById("borrowerSelect")?.value || DEFAULT_BORROWER_ID,
     amount: cleanAmount,
     reason: cleanReason,
     type,
@@ -316,7 +317,7 @@ function settleBalance() {
 
   data.push({
     id: crypto.randomUUID(),
-    borrowerId: DEFAULT_BORROWER_ID,
+    borrowerId: document.getElementById("borrowerSelect")?.value || DEFAULT_BORROWER_ID, 
     amount: balance,
     reason: "Balance settled",
     type: "paid",
@@ -879,7 +880,64 @@ function setupPWAUpdateBanner() {
     window.location.reload();
   });
 }
+function renderBorrowerSelect() {
+  const select = document.getElementById("borrowerSelect");
+  if (!select) return;
 
+  const borrowers = getBorrowers();
+
+  select.innerHTML = "";
+
+  borrowers.forEach(borrower => {
+    const option = document.createElement("option");
+    option.value = borrower.id;
+    option.textContent = borrower.name;
+    select.appendChild(option);
+  });
+}
+
+function renderBorrowerList() {
+  const list = document.getElementById("borrowerList");
+  if (!list) return;
+
+  const borrowers = getBorrowers();
+
+  list.innerHTML = "";
+
+  borrowers.forEach(borrower => {
+    const div = document.createElement("div");
+    div.className = "settings-row";
+
+    div.innerHTML = `
+      <span>${borrower.name}</span>
+      <span>${borrower.id === DEFAULT_BORROWER_ID ? "Default" : "›"}</span>
+    `;
+
+    list.appendChild(div);
+  });
+}
+
+function setupBorrowerManager() {
+  renderBorrowerSelect();
+  renderBorrowerList();
+
+  document.getElementById("addBorrowerBtn")?.addEventListener("click", () => {
+    const input = document.getElementById("newBorrowerName");
+    const name = input?.value;
+
+    const added = addBorrower(name);
+
+    if (!added) {
+      alert("Enter a new borrower name.");
+      return;
+    }
+
+    input.value = "";
+
+    renderBorrowerSelect();
+    renderBorrowerList();
+  });
+}
 /* ========================
    INIT
 ======================== */
@@ -888,6 +946,7 @@ document.addEventListener("DOMContentLoaded", () => {
   applyAppearanceSettings();
   setupSettingsPage();
   migrateDefaultBorrower();
+  setupBorrowerManager();
   refreshUI();
    setupPWAUpdateBanner();
 
