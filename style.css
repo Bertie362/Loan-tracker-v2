@@ -593,3 +593,8 @@ label,
   flex-direction: column;
   gap: 10px;
 }
+#borrowerList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
